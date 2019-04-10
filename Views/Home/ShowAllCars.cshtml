@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "View Our Car";
+}
+
+<h2>Make a Selection</h2>
+
+<div class="row">
+    @foreach (var f in ViewBag.AvailableCars)
+    {
+        <div class="col s12 m6 l4">
+            <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">@f.CarName</span>
+                    <p>Package: @f.CarPackage</p>
+                    <p>Car Mileage: @f.CarMileage  </p>
+                </div>
+                <div class="card-action">
+                    @if (f.OnRent == false)
+                    {
+                        <form action="CreateReservation" method="post">
+                            <input type="hidden" name="id" value="@f.CarId" />
+                            <button class="btn waves-effect waves-light yellow darken-2 black-text" type="submit" name="action">
+                                Make a Reservation
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </form>
+                    }
+                    else if (f.OnRent == true)
+                    {
+                         @Html.ActionLink("Return the Car", "ReturnCar", "Home")
+                    }
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

@@ -1,0 +1,152 @@
+﻿
+@{
+    ViewBag.Title = "CreateReservation";
+}
+
+<h2>Create a Reservation</h2>
+
+<div class="container">
+
+    <form method="post" action="Conformation">
+        @foreach (var f in ViewBag.CarForReservation)
+        {
+            <input type="hidden" name="Id" value="@f.CarId" />
+            <input type="hidden" name="carmilies" value="@f.CarMileage" />
+            <input type="hidden" name="conformation" value="@f.CarConformation" />
+
+            <div class="form-group">
+
+                <label for="Namefirst">First Name:</label>
+
+                <input name="first" type="text" class="form-control col-md-3 validate" id="Namefirst" aria-describedby="nameHelp" placeholder="Enter First Name" data-length="10" maxlength="10" required>
+
+            </div><br>
+
+            <div class="form-group">
+
+                <label for="Namelast">Last Name:</label>
+
+                <input type="text" name="last" class="form-control col-md-3 validate" id="Namelast" aria-describedby="nameHelp" placeholder="Enter Last Name" data-length="10" maxlength="10" required>
+
+            </div><br>
+
+
+            <div class="form-group">
+
+                <label for="email">Email:</label>
+
+                <input type="email" name="email" class="form-control col-md-3 validate" id="email" aria-describedby="nameHelp" placeholder="Enter Email" data-length="10" maxlength="10" required>
+
+            </div><br>
+
+            if (@f.CarPackage == "Compact Vehicles")
+            {
+                <div class="form-group col-md-9 col-s8">
+
+                    <label> Selected Car Package</label>
+                    <p>Compact Vehicles (per day $19.95 )</p>
+                    <input type="hidden" name="fee" value="1" />
+
+                </div><br>
+            }
+            else if (@f.CarPackage == "Standard Vehicles")
+            {
+
+                <div class="form-group col-md-9 col-s8">
+
+                    <label> Selected Car Package</label>
+                    <p>Standard Vehicles (per day $24.95 )</p>
+                    <input type="hidden" name="fee" value="2" />
+
+                </div><br>
+
+            }
+            else if (@f.CarPackage == "Luxury Vehicles")
+            {
+
+             
+                <div class="form-group col-md-9 col-s8">
+
+                    <label> Selected Car Package</label>
+                    <p>Luxury Vehicles (per day $39.00 )</p>
+                    <input type="hidden" name="fee" value="3" />
+
+                </div><br>
+
+
+            }
+
+            <div class="form-group col-md-2">
+
+                <div class="input-field col s6">
+                    <input name="pickup" type="text" class="datepicker" id="inputfrom" maxlength="10">
+                    <label for="input_from">Choose a Pick-Up Date</label>
+                </div>
+
+            </div><br>
+            <div class="form-group col-md-2">
+
+                <div class="input-field col s6">
+                    <input name="dropoff" type="text" class="datepicker" id="inputto" maxlength="10">
+                    <label for="input_to">Choose a Drop-Off Date</label>
+                </div>
+
+            </div><br>
+
+            <div class="form-group col-md-2">
+
+                <div class="input-field col s6">
+
+                    <p class="range-field">
+                        <input name="mileage" type="range" id="milage" min="0" max="1000" />
+                        <label for="milage">Estimate Your Miliage</label>
+                    </p>
+
+
+                </div>
+
+            </div><br>
+
+
+
+            <button class="btn waves-effect waves-light  light-green darken-4" type="submit" name="action">
+                Make a Reservation
+                <i class="material-icons right">send</i>
+            </button><br>
+        }
+
+    </form>
+
+</div>
+
+<script>
+   
+        $('#inputfrom').datepicker({
+            dateFormat: 'mm/dd/yyyy',
+            minDate: 0,
+            onSelect: function (date) {
+                var date2 = $('#inputfrom').datepicker('getDate');
+                date2.setDate(date2.getDate() + 1);
+                $('#inputto').datepicker('setDate', date2);
+                //sets minDate to dt1 date + 1
+                $('#inputto').datepicker('option', 'minDate', date2);
+            }
+        });
+        $('#inputto').datepicker({
+            dateFormat: 'mm/dd/yyyy',
+            onClose: function () {
+                var dt1 = $('#inputfrom').datepicker('getDate');
+                console.log(dt1);
+                var dt2 = $('#inputto').datepicker('getDate');
+                if (dt2 <= dt1) {
+                    var minDate = $('#inputto').datepicker('option', 'minDate');
+                    $('#inputto').datepicker('setDate', minDate);
+                }
+            }
+        });
+   
+</script>
+
+
+
+
